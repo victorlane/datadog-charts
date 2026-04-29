@@ -1,5 +1,9 @@
 # Datadog changelog
 
+## 3.203.0
+
+* Add `datadog.logs.dd_url` to override the logs intake endpoint independently from `datadog.site` and `datadog.dd_url`.
+
 ## 3.202.6
 
 * Update `fips.image.tag` to `1.1.23` fixing CVEs and updating packages.

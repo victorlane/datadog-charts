@@ -554,6 +554,9 @@ datadog:
     ## ref: https://docs.datadoghq.com/agent/basic_agent_usage/kubernetes/#log-collection-setup
     enabled: false
 
+    # datadog.logs.dd_url -- The host of the logs intake server to send logs to, only set this option if you need logs to go to a custom URL without changing other intake traffic
+    dd_url:
+
     # datadog.logs.containerCollectAll -- Enable this to allow log collection for all containers
 
     ## ref: https://docs.datadoghq.com/agent/basic_agent_usage/kubernetes/#log-collection-setup

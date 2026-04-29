@@ -886,6 +886,7 @@ helm install <RELEASE_NAME> \
 | datadog.logs.autoMultiLineDetection | bool | `false` | Allows the Agent to detect common multi-line patterns automatically. |
 | datadog.logs.containerCollectAll | bool | `false` | Enable this to allow log collection for all containers |
 | datadog.logs.containerCollectUsingFiles | bool | `true` | Collect logs from files in /var/log/pods instead of using container runtime API |
+| datadog.logs.dd_url | string | `nil` | The host of the logs intake server to send logs to, only set this option if you need logs to go to a custom URL without changing other intake traffic |
 | datadog.logs.enabled | bool | `false` | Enables this to activate Datadog Agent log collection |
 | datadog.namespaceAnnotationsAsTags | object | `{}` | Provide a mapping of Kubernetes Namespace Annotations to Datadog Tags |
 | datadog.namespaceLabelsAsTags | object | `{}` | Provide a mapping of Kubernetes Namespace Labels to Datadog Tags |

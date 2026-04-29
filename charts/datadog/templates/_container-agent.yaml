@@ -141,6 +141,10 @@
     - name: DD_LOGS_CONFIG_LOGS_DD_URL
       value: {{ .Values.datadog.logs.dd_url | quote }}
     {{- end }}
+    {{- if ne .Values.datadog.logs.dd_ssl_enable nil }}
+    - name: DD_LOGS_CONFIG_DD_SSL_ENABLE
+      value: {{ .Values.datadog.logs.dd_ssl_enable | quote }}
+    {{- end }}
     {{- if .Values.datadog.logs.enabled }}
     - name: DD_LOGS_CONFIG_K8S_CONTAINER_USE_FILE
       value: {{ .Values.datadog.logs.containerCollectUsingFiles | quote }}

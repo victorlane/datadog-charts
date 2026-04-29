@@ -1,5 +1,9 @@
 # Datadog changelog
 
+## 3.203.1
+
+* Add `datadog.logs.dd_ssl_enable` to override `DD_LOGS_CONFIG_DD_SSL_ENABLE` independently from other logs settings.
+
 ## 3.203.0
 
 * Add `datadog.logs.dd_url` to override the logs intake endpoint independently from `datadog.site` and `datadog.dd_url`.

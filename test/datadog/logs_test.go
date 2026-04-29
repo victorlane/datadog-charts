@@ -40,3 +40,50 @@ func Test_logsSpecificDDURLOverride(t *testing.T) {
 	assert.Equal(t, "https://logs.example.com", envs["DD_LOGS_CONFIG_LOGS_DD_URL"])
 	assert.NotContains(t, envs, "DD_DD_URL")
 }
+
+func Test_logsDDSSLEnableOverride(t *testing.T) {
+	tests := []struct {
+		name  string
+		value string
+	}{
+		{
+			name:  "enabled",
+			value: "true",
+		},
+		{
+			name:  "disabled",
+			value: "false",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			manifest, err := common.RenderChart(t, common.HelmCommand{
+				ReleaseName: "datadog",
+				ChartPath:   "../../charts/datadog",
+				ShowOnly:    []string{"templates/daemonset.yaml"},
+				Values:      []string{"../../charts/datadog/values.yaml"},
+				Overrides: map[string]string{
+					"datadog.apiKeyExistingSecret":                   "datadog-secret",
+					"datadog.logs.enabled":                           "true",
+					"datadog.logs.dd_ssl_enable":                     tt.value,
+					"datadog.operator.enabled":                       "false",
+					"datadog.kubeStateMetricsEnabled":                "false",
+					"datadog.csi.enabled":                            "false",
+					"datadog.autoscaling.workload.enabled":           "false",
+					"clusterAgent.metricsProvider.useDatadogMetrics": "false",
+				},
+			})
+			require.NoError(t, err)
+
+			var daemonset appsv1.DaemonSet
+			common.Unmarshal(t, manifest, &daemonset)
+
+			agentContainer, found := getContainer(t, daemonset.Spec.Template.Spec.Containers, "agent")
+			require.True(t, found)
+
+			envs := getEnvVarMap(agentContainer.Env)
+			assert.Equal(t, tt.value, envs["DD_LOGS_CONFIG_DD_SSL_ENABLE"])
+		})
+	}
+}
